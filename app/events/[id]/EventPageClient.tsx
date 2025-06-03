@@ -26,7 +26,7 @@ import {
 import Link from "next/link";
 import { motion, useScroll, useTransform } from "framer-motion";
 import Image from "next/image";
-import RegisterButton from "@/components/register-button";
+import { RegisterButton } from "@/components/register-button";
 
 interface EventData {
   id: number;
@@ -598,12 +598,7 @@ export default function EventPageClient({
                       </div>
                     )}
                   </div>
-                  <RegisterButton
-                    eventId={eventData.id}
-                    isTeamBased={eventData.is_team_based}
-                    registrationDeadline={eventData.registration_deadline}
-                    isActive={eventData.is_active}
-                  />
+                  <RegisterButton event={eventData} />
                 </CardContent>
               </Card>
 
