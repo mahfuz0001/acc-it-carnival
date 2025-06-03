@@ -1,30 +1,33 @@
-import webpush from "web-push"
+import webpush from "web-push";
 
 // Configure web-push with VAPID keys
 webpush.setVapidDetails(
-  "mailto:admin@itcarnival.tech",
+  `mailto:${process.env.NEXT_PUBLIC_VAPID_EMAIL || ""}`,
   process.env.NEXT_PUBLIC_VAPID_PUBLIC_KEY!,
-  process.env.VAPID_PRIVATE_KEY!,
-)
+  process.env.VAPID_PRIVATE_KEY!
+);
 
 export interface PushNotificationPayload {
-  title: string
-  body: string
-  url?: string
+  title: string;
+  body: string;
+  url?: string;
   actions?: Array<{
-    action: string
-    title: string
-  }>
-  primaryKey?: string
+    action: string;
+    title: string;
+  }>;
+  primaryKey?: string;
 }
 
-export async function sendPushNotification(subscription: any, payload: PushNotificationPayload) {
+export async function sendPushNotification(
+  subscription: any,
+  payload: PushNotificationPayload
+) {
   try {
-    await webpush.sendNotification(subscription, JSON.stringify(payload))
-    return { success: true }
+    await webpush.sendNotification(subscription, JSON.stringify(payload));
+    return { success: true };
   } catch (error) {
-    console.error("Error sending push notification:", error)
-    return { error: "Failed to send push notification" }
+    console.error("Error sending push notification:", error);
+    return { error: "Failed to send push notification" };
   }
 }
 
@@ -32,7 +35,7 @@ export async function sendTeamInvitationPushNotification(
   subscription: any,
   teamName: string,
   eventName: string,
-  invitationId: string,
+  invitationId: string
 ) {
   const payload: PushNotificationPayload = {
     title: "Team Invitation",
@@ -49,7 +52,7 @@ export async function sendTeamInvitationPushNotification(
       },
     ],
     primaryKey: invitationId,
-  }
+  };
 
-  return sendPushNotification(subscription, payload)
+  return sendPushNotification(subscription, payload);
 }
