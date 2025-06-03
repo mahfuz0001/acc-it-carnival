@@ -17,11 +17,12 @@ async function getEvent(id: string) {
   return event;
 }
 
-export default async function EventPage({
-  params,
-}: {
-  params: { id: string };
-}) {
+export default async function EventPage(
+  props: {
+    params: Promise<{ id: string }>;
+  }
+) {
+  const params = await props.params;
   const event = await getEvent(params.id);
 
   if (!event) {

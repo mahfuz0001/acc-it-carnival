@@ -12,11 +12,12 @@ import {
 } from "@/components/ui/card";
 import { respondToInvitation } from "@/lib/actions/team-invitations";
 
-export default async function InvitationPage({
-  params,
-}: {
-  params: { id: string };
-}) {
+export default async function InvitationPage(
+  props: {
+    params: Promise<{ id: string }>;
+  }
+) {
+  const params = await props.params;
   const supabase = await createClient();
 
   // Check if user is authenticated

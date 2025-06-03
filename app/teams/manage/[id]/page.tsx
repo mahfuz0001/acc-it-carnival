@@ -21,11 +21,12 @@ import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Clock, Mail, UserPlus, X } from "lucide-react";
 
-export default async function ManageTeamPage({
-  params,
-}: {
-  params: { id: string };
-}) {
+export default async function ManageTeamPage(
+  props: {
+    params: Promise<{ id: string }>;
+  }
+) {
+  const params = await props.params;
   const supabase = await createClient();
 
   // Check if user is authenticated
